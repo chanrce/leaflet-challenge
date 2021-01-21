@@ -34,7 +34,7 @@ function chooseColor(depth) {
     return "#524595";
   case (depth>=10):
     return "#807fbb";
-  case (depth<=10):
+  case (depth<10):
       return "#cca4c5";
   default:
     return "white";
@@ -61,8 +61,30 @@ d3.json(queryUrl, function(data) {
         opacity: 1,
         fillOpacity: 0.8});
   }
+
+
   }).addTo(myMap);
  
   
 });
 
+var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    // labels = ['<strong>Categories</strong>'],
+    var categories = ['<10','10-30','30-50','50-70','70-90','>90'];
+    var colors =["#cca4c5", "#807fbb", "#524595", "#3e2377","#28085f","#402060"]
+
+    for (var i = 0; i < categories.length; i++) {
+
+            div.innerHTML += 
+            // labels.push(
+                '<li class="circle" style="background:' + colors[i] + '"></li> ' +
+            (categories[i] ? categories[i] : '+');
+
+        }
+        // div.innerHTML = labels.join('<br>');
+    return div;
+    };
+    legend.addTo(myMap);
