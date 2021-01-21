@@ -23,27 +23,27 @@ var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_we
 
 //Choosing color based on 
 function chooseColor(depth) {
-  switch (depth) {
+  switch (true) {
   case (depth>=90):
     return "#402060";
   case (depth>=70):
-    return "#4d2673";
+    return "#28085f";
   case (depth>=50):
-    return "#592d86";
+    return "#3e2377";
   case (depth>=30):
-    return "#663399";
+    return "#524595";
   case (depth>=10):
-    return "#7339ac";
+    return "#807fbb";
   case (depth<=10):
-      return "#8040bf";
+      return "#cca4c5";
   default:
-    return "black";
+    return "white";
   }
 }
 
 
 d3.json(queryUrl, function(data) {
-  
+    
   
   // Once we get a response, send the data.features object to the createFeatures function
   L.geoJson(data, {
@@ -53,13 +53,11 @@ d3.json(queryUrl, function(data) {
     },
     pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, {
-        radius: feature.properties.mag,
-        //Defining the depth
-        // fillColor: "#ff7800",
+        radius: (feature.properties.mag)*2.3,
         // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
         fillColor: chooseColor(feature.geometry.coordinates[2]),
         color: "#000",
-        weight: 1,
+        weight: 0.5,
         opacity: 1,
         fillOpacity: 0.8});
   }
