@@ -45,13 +45,14 @@ d3.json(queryUrl, function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
   L.geoJson(data, {
     onEachFeature: function(feature, layer) {
-      layer.bindPopup("<h1>" + feature.properties.mag + "</h1> <hr> <h2>" + feature.properties.place + "</h2>");
+      layer.bindPopup("<h1> Location: " + feature.properties.place + "</h1> <hr> <h2> Magnitude: " + feature.properties.mag + "</h2>" + 
+      "<h2> Depth: " + feature.geometry.coordinates[2]);
       
     },
     pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, {
         radius: (feature.properties.mag)*2.3,
-        // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
+        // Call the chooseColor function to decide which color to color our earthquake location (color based on depth)
         fillColor: chooseColor(feature.geometry.coordinates[2]),
         color: "#000",
         weight: 0.5,
@@ -71,17 +72,17 @@ var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 50, 100, 200],
+        depths = [-10, 10, 30, 50, 70, 90],
         labels = [];
     
     //Legend title
-    div.innerHTML += '<b>Depth</b><br>'
+    div.innerHTML += '<b>Depth</b><br><hr>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
+    for (var i = 0; i < depths.length; i++) {
         div.innerHTML +=
-            '<li style="background:' + chooseColor(grades[i] + 1) + '"></li> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            '<li style="background:' + chooseColor(depths[i] + 1) + '"></li> ' +
+            depths[i] + (depths[i + 1] ? '&ndash;' + depths[i + 1] + '<br>' : '+');
     }
 
     return div;
