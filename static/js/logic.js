@@ -17,9 +17,6 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 // Store our API endpoint inside queryUrl
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
-// //Defining depth variable:
-// var depth = data.features.geometry.coordinates[2];
-// console.log(depth)
 
 //Choosing color based on 
 function chooseColor(depth) {
@@ -68,29 +65,7 @@ d3.json(queryUrl, function(data) {
   
 });
 
-// var legend = L.control({position: 'bottomright'});
-//     legend.onAdd = function () {
-
-//     var div = L.DomUtil.create('div', 'info legend');
-//     // labels = ['<strong>Categories</strong>'],
-//     var categories = [-10,10,30,50,70,90];
-//     var colors =["#cca4c5", "#807fbb", "#524595", "#3e2377","#28085f","#402060"]
-
-    
-
-//     for (var i = 0; i < categories.length; i++) {
-
-//             div.innerHTML += 
-//             // labels.push(
-//               '<i style="background:' + colors[i+1] + '"></i> ' + 
-//               categories[i] + (categories[i + 1] ? '&ndash;' + categories[i + 1] + '<br>' : '+');
-
-//         }
-//         // div.innerHTML = labels.join('<br>');
-//     return div;
-//     };
-//     legend.addTo(myMap);
-
+//Creating the legend
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -98,6 +73,9 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [0, 10, 20, 50, 100, 200],
         labels = [];
+    
+    //Legend title
+    div.innerHTML += '<b>Depth</b><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
