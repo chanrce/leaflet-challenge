@@ -1,4 +1,4 @@
-# Leaflet-challenge
+# Leaflet Challege
 ## Project Summary
 
 * The goal of this project was to create an interactive visualization based off of USGS earthquake data. The map had the following attributes:
@@ -17,5 +17,5 @@
 * A switch function was used to help categorize the depth data. This was visualized through the different colors applied to the marker categories.
 
 ## The Final Product: An Interactive Website
-* Interactive Map::
+* Interactive Map:
  ![Map](Images/Map.png)
